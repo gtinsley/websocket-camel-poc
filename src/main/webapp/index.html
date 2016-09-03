@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>WebSocket POC</title>
+<script type="text/javascript">
+
+	//var wsURI = 'ws://' + window.location.host + '/websocket-camel-poc/websocket';
+	var wsURI = 'ws://localhost:9090/camel-ws';
+	var websocket = new WebSocket(wsURI);
+	
+	websocket.onopen = function(event) {
+		console.log("Connected: " + wsURI);
+	    displayMessage('[Connected] ' + wsURI, "clear");
+	};
+	
+	websocket.onmessage = function(event) {
+		console.log("Message recieved: " + event.data);
+	    displayMessage('[Message received] ' + event.data);
+	};
+	
+	websocket.onerror = function(event) {
+		console.log("Error from websocket: " + event.data);
+	    displayMessage('[Error] ' + event.data);
+	};
+	
+	function displayMessage(data, clear) {
+	    var message = document.getElementById('output');
+	    if (clear == "clear") //clear text area on refresh
+	    	message.value = "";    
+	    message.value += data + "\r\n";
+	    message.scrollTop = message.scrollHeight
+	}
+</script>
+</head>
+<body>
+	<div>
+		<h1>Websocket POC</h1>
+		<div id="container">
+			<div>
+				<textarea id="output" rows="20" cols="200"></textarea>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
